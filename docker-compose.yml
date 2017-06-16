@@ -1,0 +1,22 @@
+version: "3"
+services:
+  hdfs-namenode:
+    build: .
+    image: zenoss/zing-hdfs:dev
+    command: namenode
+    environment:
+      CLUSTER_NAME: hdfs-namenode
+      CONFIG_TYPE: dev
+    volumes:
+    - hdfs_nn:/data/hdfs/nn:rw
+  hdfs-datanode:
+    image: zenoss/zing-hdfs:dev
+    command: datanode
+    environment:
+      CLUSTER_NAME: hdfs-namenode
+      CONFIG_TYPE: dev
+    volumes:
+    - hdfs_dn:/data/hdfs/dn:rw
+volumes:
+  hdfs_dn: {}
+  hdfs_nn: {}

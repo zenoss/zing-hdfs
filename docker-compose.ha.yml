@@ -1,0 +1,57 @@
+version: "3"
+services:
+  hdfs-namenode:
+    build: .
+    image: zenoss/zing-hdfs:dev
+    command: ["active"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_nn:/data/hdfs/nn"
+
+  hdfs-datanode:
+    image: zenoss/zing-hdfs:dev
+    command: ["datanode"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_nn:/data/hdfs/dn"
+
+  hdfs-standby:
+    image: zenoss/zing-hdfs:dev
+    command: ["standby"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_nn_standby:/data/hdfs/nn"
+
+  hdfs-zkfc:
+    image: zenoss/zing-hdfs:dev
+    command: ["zkfc"]
+    env_file: ha.env
+
+  hdfs-journal1:
+    image: zenoss/zing-hdfs:dev
+    command: ["journalnode"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_journal1:/data/hdfs/journal"
+
+  hdfs-journal2:
+    image: zenoss/zing-hdfs:dev
+    command: ["journalnode"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_journal2:/data/hdfs/journal"
+
+  hdfs-journal3:
+    image: zenoss/zing-hdfs:dev
+    command: ["journalnode"]
+    env_file: ha.env
+    volumes:
+      - "hdfs_journal3:/data/hdfs/journal"
+
+volumes:
+  hdfs_dn:
+  hdfs_nn:
+  hdfs_nn_standby:
+  hdfs_journal1:
+  hdfs_journal2:
+  hdfs_journal3:
