@@ -17,7 +17,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install hadoop
-RUN wget -q -O - http://zenpip.zendev.org/packages/hadoop-${HADOOP_VERSION}.tar.gz | tar -xzf - -C /usr/local \
+RUN wget -q -O - http://zenpip.zenoss.eng/packages/hadoop-${HADOOP_VERSION}.tar.gz | tar -xzf - -C /usr/local \
  && ln -s /usr/local/hadoop-${HADOOP_VERSION} /usr/local/hadoop \
  && rm -rf /usr/local/hadoop/share/doc \
  && mkdir -p /data/hdfs/nn /data/hdfs/dn /data/hdfs/journal \
