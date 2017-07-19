@@ -2,7 +2,7 @@ version: "3"
 services:
   hdfs-namenode:
     build: .
-    image: ${CI_IMAGE:-zenoss/zing-hdfs:dev}
+    image: ${IMAGE:-zenoss/zing-hdfs:dev}
     command: namenode
     environment:
       CLUSTER_NAME: hdfs-namenode

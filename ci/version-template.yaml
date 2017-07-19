@@ -1,0 +1,6 @@
+version: "3.2"
+services:
+  hdfs-namenode:
+    image: ${REMOTE_IMAGE}
+  hdfs-datanode:
+    image: ${REMOTE_IMAGE}
