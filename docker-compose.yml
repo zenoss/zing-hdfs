@@ -14,11 +14,17 @@ services:
     environment:
       CLUSTER_NAME: hdfs-namenode
       CONFIG_TYPE: dev
+    healthcheck:
+      test: test $$(curl -sA healthcheck -o /dev/null -w "%{http_code}" localhost:50070) = 200
+    ports:
+    - 50070:50070 # NameNode WebUI
     volumes:
     - hdfs_nn:/data/hdfs/nn:rw
   hdfs-datanode:
     image: zenoss/zing-hdfs:dev
     command: datanode
+    healthcheck:
+      test: test $$(curl -sA healthcheck -o /dev/null -w "%{http_code}" localhost:50075) = 200
     environment:
       CLUSTER_NAME: hdfs-namenode
       CONFIG_TYPE: dev
