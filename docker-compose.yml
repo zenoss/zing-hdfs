@@ -21,7 +21,7 @@ services:
     volumes:
     - hdfs_nn:/data/hdfs/nn:rw
   hdfs-datanode:
-    image: zenoss/zing-hdfs:dev
+    image: ${SERVICE_IMAGE}:${IMAGE_TAG:-dev}
     command: datanode
     healthcheck:
       test: test $$(curl -sA healthcheck -o /dev/null -w "%{http_code}" localhost:50075) = 200
