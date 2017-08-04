@@ -13,7 +13,7 @@ change the Jenkins jobs for this service, keep reading.
 
 ## Development
 
-We use Jenkins for our CI process.  This microservice has a suite of Jenkins 
+We use Jenkins for our CI process.  This service has a suite of Jenkins 
 jobs associated with it.  The suite consists of a pull-request job and a 
 deployment (or "master") job.  The pull-request job runs in response to a new 
 or updated pull-request and is responsible for running all relevant tests.  
