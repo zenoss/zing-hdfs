@@ -1,5 +1,8 @@
 #!/bin/bash
 
+log () {
+	echo $(date "+%y/%m/%d %H:%M:%S") "$1 $(basename $0): $2"
+}
 
 # Render the templates into place
 SOURCE=${CONFIG_TYPE:=dev}
@@ -8,19 +11,26 @@ SOURCE=${CONFIG_TYPE:=dev}
     envsubst <$SOURCE/hdfs-site.xml.template >hdfs-site.xml
 )
 
+# Some service require a delay before they start up in order to allow dependent
+# services to start.
+if [ -n "$BOOTSTRAP_SLEEP" ] ; then
+	log INFO "sleep $BOOTSTRAP_SLEEP"
+	sleep $BOOTSTRAP_SLEEP
+fi
+
 # Read the 1st arg, and based upon one of the five: format or bootstrap or start the particular service
 # NN and ZKFC stick together
 MODE=$1
 case "$MODE" in
   active)
     if [[ ! -a /data/hdfs/nn/current/VERSION ]]; then
-      echo "Format Namenode.."
+      log INFO "Format Namenode.."
       $HADOOP_PREFIX/bin/hdfs namenode -format
 
-      echo "Format Zookeeper for Fast failover.."
+      log INFO "Format Zookeeper for Fast failover.."
       $HADOOP_PREFIX/bin/hdfs zkfc -formatZK
 
-      echo "InitializeSharedEdits.."
+      log INFO "InitializeSharedEdits.."
       $HADOOP_PREFIX/bin/hdfs namenode -initializeSharedEdits
     fi
     $HADOOP_PREFIX/sbin/hadoop-daemon.sh start zkfc
@@ -28,7 +38,7 @@ case "$MODE" in
     ;;
   standby)
     if [[ ! -a /data/hdfs/nn/current/VERSION ]]; then
-      echo "Bootstrap Standby Namenode.."
+      log INFO "Bootstrap Standby Namenode.."
       $HADOOP_PREFIX/bin/hdfs namenode -bootstrapStandby
     fi
     $HADOOP_PREFIX/sbin/hadoop-daemon.sh start zkfc
@@ -45,7 +55,7 @@ case "$MODE" in
     ;;
   namenode)
     if [[ ! -a /data/hdfs/nn/current/VERSION ]]; then
-      echo "Format Namenode.."
+      log INFO "Format Namenode.."
       $HADOOP_PREFIX/bin/hdfs namenode -format
     fi
     init_hdfs.sh &

@@ -28,6 +28,7 @@ services:
     environment:
       CLUSTER_NAME: hdfs-namenode
       CONFIG_TYPE: dev
+      BOOTSTRAP_SLEEP: 10
     volumes:
     - hdfs_dn:/data/hdfs/dn:rw
 volumes:
