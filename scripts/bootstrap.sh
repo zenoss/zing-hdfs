@@ -56,7 +56,6 @@ case "$MODE" in
     ;;
   datanode)
     wait_for_init_hdfs.sh
-    sleep 30
     $HADOOP_PREFIX/bin/hdfs datanode
     ;;
   *)
