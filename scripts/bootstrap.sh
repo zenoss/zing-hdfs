@@ -11,13 +11,6 @@ SOURCE=${CONFIG_TYPE:=dev}
     envsubst <$SOURCE/hdfs-site.xml.template >hdfs-site.xml
 )
 
-# Some service require a delay before they start up in order to allow dependent
-# services to start.
-if [ -n "$BOOTSTRAP_SLEEP" ] ; then
-	log INFO "sleep $BOOTSTRAP_SLEEP"
-	sleep $BOOTSTRAP_SLEEP
-fi
-
 # Read the 1st arg, and based upon one of the five: format or bootstrap or start the particular service
 # NN and ZKFC stick together
 MODE=$1
@@ -62,6 +55,7 @@ case "$MODE" in
     $HADOOP_PREFIX/bin/hdfs namenode
     ;;
   datanode)
+    wait_for_init_hdfs.sh
     $HADOOP_PREFIX/bin/hdfs datanode
     ;;
   *)
