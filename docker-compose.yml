@@ -14,8 +14,6 @@ services:
     environment:
       CLUSTER_NAME: hdfs-namenode
       CONFIG_TYPE: dev
-    healthcheck:
-      test: test $$(curl -sA healthcheck -o /dev/null -w "%{http_code}" localhost:50070) = 200
     ports:
     - 50070:50070 # NameNode WebUI
     volumes:
@@ -23,12 +21,9 @@ services:
   hdfs-datanode:
     image: ${SERVICE_IMAGE}:${IMAGE_TAG:-dev}
     command: datanode
-    healthcheck:
-      test: test $$(curl -sA healthcheck -o /dev/null -w "%{http_code}" localhost:50075) = 200
     environment:
       CLUSTER_NAME: hdfs-namenode
       CONFIG_TYPE: dev
-      BOOTSTRAP_SLEEP: 10
     volumes:
     - hdfs_dn:/data/hdfs/dn:rw
 volumes:
