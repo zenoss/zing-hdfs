@@ -40,3 +40,6 @@ USER $HADOOP_USER
 WORKDIR /usr/local/hadoop
 ENTRYPOINT ["/usr/local/bin/bootstrap.sh"]
 CMD ["bash"]
+
+# Format the HDFS filesystem
+RUN /usr/local/bin/init_hdfs.sh
