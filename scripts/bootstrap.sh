@@ -47,15 +47,9 @@ case "$MODE" in
     /bin/bash
     ;;
   namenode)
-    if [[ ! -a /data/hdfs/nn/current/VERSION ]]; then
-      log INFO "Format Namenode.."
-      $HADOOP_PREFIX/bin/hdfs namenode -format
-    fi
-    init_hdfs.sh &
     $HADOOP_PREFIX/bin/hdfs namenode
     ;;
   datanode)
-    wait_for_init_hdfs.sh
     $HADOOP_PREFIX/bin/hdfs datanode
     ;;
   *)
