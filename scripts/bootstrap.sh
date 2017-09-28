@@ -50,6 +50,7 @@ case "$MODE" in
     $HADOOP_PREFIX/bin/hdfs namenode
     ;;
   datanode)
+    wait_for_namenode.sh
     $HADOOP_PREFIX/bin/hdfs datanode
     ;;
   *)
