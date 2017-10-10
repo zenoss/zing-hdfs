@@ -8,7 +8,7 @@ export HADOOP_OPTS="-Ddfs.namenode.name.dir=file:///data/hdfs/nn -Dfs.defaultFS=
 PATH=$PATH:$HADOOP_COMMON_HOME/bin
 
 log INFO "Format HDFS"
-hdfs namenode $HADOOP_OPTS -format &>/dev/null
+hdfs namenode $HADOOP_OPTS -format -nonInteractive &>/dev/null
 
 log INFO "Start namenode"
 hdfs namenode $HADOOP_OPTS &>/dev/null &
